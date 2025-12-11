@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Painel do Wesley</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-1: #020617;
+      --bg-2: #020617;
+      --card-bg: rgba(15, 23, 42, 0.88);
+      --card-border: rgba(148, 163, 184, 0.35);
+      --text-main: #e5e7eb;
+      --text-soft: #9ca3af;
+      --accent-1: #38bdf8;
+      --accent-2: #a855f7;
+      --accent-3: #f97316;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: radial-gradient(circle at top, #020617 0, #020617 30%, #000 100%);
+      color: var(--text-main);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Fundo com gradiente animado bem suave */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -30%;
+      background: radial-gradient(circle at 0% 0%, #1d4ed8 0, transparent 55%),
+        radial-gradient(circle at 100% 0%, #a855f7 0, transparent 55%),
+        radial-gradient(circle at 0% 100%, #22c55e 0, transparent 55%);
+      opacity: 0.18;
+      filter: blur(40px);
+      animation: bgMove 22s ease-in-out infinite alternate;
+      z-index: -2;
+    }
+
+    @keyframes bgMove {
+      0% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+      50% {
+        transform: translate3d(-4%, 2%, 0) scale(1.05);
+      }
+      100% {
+        transform: translate3d(4%, -3%, 0) scale(1.02);
+      }
+    }
+
+    /* Glow atrás do card */
+    .glow {
+      position: absolute;
+      width: 380px;
+      height: 220px;
+      background: radial-gradient(circle, #38bdf8 0, transparent 60%);
+      opacity: 0.35;
+      filter: blur(24px);
+      z-index: -1;
+      animation: glowPulse 6s ease-in-out infinite;
+    }
+
+    @keyframes glowPulse {
+      0% {
+        opacity: 0.25;
+        transform: translateY(6px) scale(0.98);
+      }
+      50% {
+        opacity: 0.55;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0.25;
+        transform: translateY(6px) scale(0.98);
+      }
+    }
+
+    .card {
+      position: relative;
+      max-width: 460px;
+      width: 100%;
+      padding: 24px 26px 22px;
+      border-radius: 18px;
+      background: linear-gradient(
+          135deg,
+          rgba(15, 23, 42, 0.96),
+          rgba(15, 23, 42, 0.88)
+        );
+      border: 1px solid var(--card-border);
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      overflow: hidden;
+      animation: cardEnter 0.7s ease-out forwards;
+      transform: translateY(10px);
+      opacity: 0;
+    }
+
+    /* Borda animada sutil */
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(
+        135deg,
+        rgba(56, 189, 248, 0.5),
+        rgba(168, 85, 247, 0.5),
+        rgba(249, 115, 22, 0.5)
+      );
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      opacity: 0.55;
+      animation: borderGlow 8s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes cardEnter {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes borderGlow {
+      0% {
+        filter: hue-rotate(0deg);
+      }
+      100% {
+        filter: hue-rotate(360deg);
+      }
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(15, 118, 110, 0.18);
+      color: #a5f3fc;
+      border: 1px solid rgba(34, 211, 238, 0.25);
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-soft);
+      margin-bottom: 14px;
+    }
+
+    ul {
+      list-style: none;
+      margin-bottom: 14px;
+    }
+
+    li {
+      font-size: 13px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      color: #e5e7eb;
+    }
+
+    li span.bullet {
+      font-size: 11px;
+      margin-top: 2px;
+    }
+
+    .status-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(31, 41, 55, 0.9);
+      padding-top: 8px;
+      margin-top: 4px;
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .status-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 12px rgba(34, 197, 94, 0.9);
+      animation: dotPulse 1.6s ease-in-out infinite;
+    }
+
+    @keyframes dotPulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+      50% {
+        transform: scale(1.25);
+        opacity: 1;
+      }
+    }
+
+    .typing {
+      display: inline-block;
+      border-right: 1px solid rgba(248, 250, 252, 0.8);
+      white-space: nowrap;
+      overflow: hidden;
+      padding-right: 4px;
+      animation: caret 0.7s steps(1) infinite;
+    }
+
+    @keyframes caret {
+      0%, 60% {
+        border-color: rgba(248, 250, 252, 0.9);
+      }
+      60.1%, 100% {
+        border-color: transparent;
+      }
+    }
+
+    .status-dots span {
+      display: inline-block;
+      animation: bounce 1s infinite;
+    }
+    .status-dots span:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+    .status-dots span:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes bounce {
+      0%, 80%, 100% {
+        transform: translateY(0);
+        opacity: 0.5;
+      }
+      40% {
+        transform: translateY(-2px);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 500px) {
+      body {
+        padding: 14px;
+      }
+      .card {
+        padding: 18px 16px 16px;
+      }
+      .title {
+        font-size: 16px;
+      }
+      .subtitle {
+        font-size: 12px;
+      }
+      li {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow"></div>
+
+  <main class="card">
+    <header class="header">
+      <div class="title">
+        <span id="typing" class="typing"></span>
+      </div>
+      <span class="tag">Painel do criador</span>
+    </header>
+
+    <p class="subtitle">
+      Gerencie suas tarefas e envios de vídeo diretamente por aqui.
+    </p>
+
+    <ul>
+      <li>
+        <span class="bullet">•</span>
+        <span>Clique em <strong>“Enviar projeto”</strong> quando o vídeo estiver pronto.</span>
+      </li>
+      <li>
+        <span class="bullet">•</span>
+        <span>Confira se o link do Drive está como <strong>público</strong> antes de enviar.</span>
+      </li>
+      <li>
+        <span class="bullet">•</span>
+        <span>Relaxe: a automação cuida do resto pra você 🚀</span>
+      </li>
+    </ul>
+
+    <div class="status-bar">
+      <div class="status-left">
+        <div class="dot"></div>
+        <span>Automação ativa</span>
+      </div>
+      <div class="status-right">
+        <span class="status-dots">
+          Processando<span>.</span><span>.</span><span>.</span>
+        </span>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Saudação dinâmica + efeito de digitação
+    const el = document.getElementById("typing");
+
+    function getGreeting() {
+      const h = new Date().getHours();
+      if (h < 12) return "Bom dia, Wesley 👋";
+      if (h < 18) return "Boa tarde, Wesley 👋";
+      return "Boa noite, Wesley 👋";
+    }
+
+    const text = "Bem-vindo ao seu painel, Wesley 👋";
+    const altText = getGreeting();
+    const finalText = altText || text;
+
+    let i = 0;
+    function type() {
+      if (i <= finalText.length) {
+        el.textContent = finalText.slice(0, i);
+        i++;
+        const delay = i < 5 ? 120 : 35; // começa mais lento, depois acelera
+        setTimeout(type, delay);
+      } else {
+        // remove o cursor depois de uns segundos, se quiser
+        setTimeout(() => {
+          el.classList.remove("typing");
+        }, 1400);
+      }
+    }
+
+    type();
+  </script>
+</body>
+</html>
