@@ -107,11 +107,128 @@
             font-size: 15px;
             color: #94a3b8;
             font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .greeting-emoji {
+            font-size: 24px;
+            display: inline-block;
+            animation: floatEmoji 3s ease-in-out infinite;
+        }
+
+        @keyframes floatEmoji {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
         }
 
         .greeting-name {
             color: #e0e6ed;
             font-weight: 600;
+        }
+
+        /* Elementos decorativos */
+        .decorative-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 5;
+        }
+
+        /* Estrelas cadentes / Cometas */
+        .shooting-star {
+            position: absolute;
+            top: 10%;
+            right: -100px;
+            width: 2px;
+            height: 2px;
+            background: #34d399;
+            border-radius: 50%;
+            box-shadow: 
+                0 0 10px #34d399,
+                0 0 20px #34d399,
+                0 0 30px #34d399;
+            animation: shootingStar 8s linear infinite;
+        }
+
+        .shooting-star::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #34d399);
+            transform-origin: right;
+        }
+
+        @keyframes shootingStar {
+            0% {
+                transform: translateX(0) translateY(0);
+                opacity: 1;
+            }
+            70% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(-1500px) translateY(600px);
+                opacity: 0;
+            }
+        }
+
+        /* Gatinho de cadeira de rodas */
+        .wheelchair-cat {
+            position: absolute;
+            bottom: 20px;
+            left: -80px;
+            font-size: 48px;
+            filter: grayscale(0.3) brightness(1.2);
+            animation: catWalk 25s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes catWalk {
+            0% {
+                left: -80px;
+                transform: scaleX(1) rotate(0deg);
+            }
+            48% {
+                left: calc(100% + 80px);
+                transform: scaleX(1) rotate(0deg);
+            }
+            50% {
+                left: calc(100% + 80px);
+                transform: scaleX(-1) rotate(0deg);
+            }
+            98% {
+                left: -80px;
+                transform: scaleX(-1) rotate(0deg);
+            }
+            100% {
+                left: -80px;
+                transform: scaleX(1) rotate(0deg);
+            }
+        }
+
+        /* Animação de balanço pra dar efeito de movimento */
+        .wheelchair-cat::before {
+            content: '♿';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            animation: wheelchairBounce 0.5s ease-in-out infinite;
+        }
+
+        @keyframes wheelchairBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0px); }
+            50% { transform: translateX(-50%) translateY(-3px); }
         }
 
         .status-indicator {
@@ -457,6 +574,7 @@
                         <span class="brand-badge">Painel</span>
                     </div>
                     <div class="greeting-compact">
+                        <span id="greetingEmoji" class="greeting-emoji">🌙</span>
                         <span id="greeting">Tenha uma excepcional noite</span>, <span class="greeting-name" id="memberName"></span>
                     </div>
                 </div>
@@ -525,6 +643,17 @@
                 </div>
             </div>
         </div>
+
+        <!-- Elementos decorativos animados -->
+        <div class="decorative-elements">
+            <!-- Estrelas/Cometas -->
+            <div class="shooting-star"></div>
+            <div class="shooting-star" style="animation-delay: 3s; top: 20%;"></div>
+            <div class="shooting-star" style="animation-delay: 6s; top: 60%;"></div>
+            
+            <!-- Gatinho de cadeira de rodas -->
+            <div class="wheelchair-cat">🐱</div>
+        </div>
     </div>
 
     <!-- Hack overlay -->
@@ -540,13 +669,17 @@
         function updateGreeting() {
             const hour = new Date().getHours();
             const greetingEl = document.getElementById('greeting');
+            const emojiEl = document.getElementById('greetingEmoji');
             
             if (hour >= 5 && hour < 12) {
                 greetingEl.textContent = 'Tenha uma excepcional manhã';
+                emojiEl.textContent = '☀️'; // Sol da manhã
             } else if (hour >= 12 && hour < 18) {
                 greetingEl.textContent = 'Tenha uma excepcional tarde';
+                emojiEl.textContent = '🌤️'; // Sol da tarde
             } else {
                 greetingEl.textContent = 'Tenha uma excepcional noite';
+                emojiEl.textContent = '🌙'; // Lua
             }
         }
 
