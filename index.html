@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dark Post - Cyber Dashboard</title>
+    <title>Kenny System - Dashboard</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
         * {
             margin: 0;
@@ -14,9 +14,9 @@
         }
 
         body {
-            font-family: 'Share Tech Mono', monospace;
-            background: #0a0e27;
-            color: #e0e0e0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #0d1b2a 50%, #1b263b 100%);
+            color: #e0e6ed;
             overflow: hidden;
             position: relative;
             min-height: 100vh;
@@ -25,435 +25,377 @@
             justify-content: center;
         }
 
-        /* Background animado com grid hexagonal */
-        .cyber-bg {
+        /* Background subtle pattern */
+        body::before {
+            content: '';
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(ellipse at center, rgba(255, 0, 110, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(0, 245, 255, 0.1) 0%, transparent 50%),
-                linear-gradient(180deg, #0a0e27 0%, #1a1f3a 100%);
-            z-index: 1;
+                radial-gradient(circle at 20% 50%, rgba(52, 211, 153, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(59, 130, 246, 0.03) 0%, transparent 50%);
+            pointer-events: none;
         }
 
-        .hex-grid {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(90deg, rgba(255, 0, 110, 0.03) 1px, transparent 1px),
-                linear-gradient(0deg, rgba(0, 245, 255, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            animation: gridMove 20s linear infinite;
-            z-index: 2;
-        }
-
-        @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(40px, 40px); }
-        }
-
-        /* Scan line effect */
-        .scan-line {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(0, 245, 255, 0.8), transparent);
-            animation: scan 4s linear infinite;
-            z-index: 3;
-            box-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
-        }
-
-        @keyframes scan {
-            0% { transform: translateY(0); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateY(100vh); opacity: 0; }
-        }
-
-        /* Container principal */
-        .dashboard-container {
+        /* Container principal - Banner largo */
+        .banner-container {
             position: relative;
             z-index: 10;
-            width: 90%;
-            max-width: 900px;
-            padding: 20px;
-            animation: fadeIn 0.8s ease-out;
+            width: 95%;
+            max-width: 1200px;
+            animation: fadeIn 0.6s ease-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Card principal */
-        .cyber-card {
-            background: rgba(26, 31, 58, 0.85);
-            border: 1px solid rgba(255, 0, 110, 0.3);
-            border-radius: 0;
-            padding: 30px;
+        /* Card principal - Banner horizontal */
+        .banner-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+            border: 1px solid rgba(52, 211, 153, 0.15);
+            border-radius: 16px;
+            padding: 32px 40px;
             position: relative;
             backdrop-filter: blur(10px);
             box-shadow: 
-                0 0 30px rgba(255, 0, 110, 0.2),
-                inset 0 0 20px rgba(0, 245, 255, 0.05);
-            clip-path: polygon(
-                0 10px, 10px 0, 
-                calc(100% - 10px) 0, 100% 10px,
-                100% calc(100% - 10px), calc(100% - 10px) 100%,
-                10px 100%, 0 calc(100% - 10px)
-            );
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
 
-        .cyber-card::before {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: -1px;
-            right: -1px;
-            bottom: -1px;
-            background: linear-gradient(45deg, #ff006e, #00f5ff, #ff006e);
-            background-size: 200% 200%;
-            animation: borderGlow 3s ease-in-out infinite;
-            z-index: -1;
-            opacity: 0.5;
-            clip-path: polygon(
-                0 10px, 10px 0, 
-                calc(100% - 10px) 0, 100% 10px,
-                100% calc(100% - 10px), calc(100% - 10px) 100%,
-                10px 100%, 0 calc(100% - 10px)
-            );
-        }
-
-        @keyframes borderGlow {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        /* Header */
-        .cyber-header {
+        /* Header horizontal */
+        .banner-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 0, 110, 0.3);
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(52, 211, 153, 0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
 
         .brand {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 24px;
-            font-weight: 900;
-            background: linear-gradient(135deg, #ff006e, #00f5ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 20px rgba(255, 0, 110, 0.5);
-            letter-spacing: 2px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #34d399;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-badge {
+            background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+            color: #0a1628;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .greeting-compact {
+            font-size: 15px;
+            color: #94a3b8;
+            font-weight: 400;
+        }
+
+        .greeting-name {
+            color: #e0e6ed;
+            font-weight: 600;
         }
 
         .status-indicator {
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 12px;
-            color: #39ff14;
-            text-transform: uppercase;
+            background: rgba(52, 211, 153, 0.1);
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(52, 211, 153, 0.2);
         }
 
         .status-dot {
-            width: 8px;
-            height: 8px;
-            background: #39ff14;
+            width: 6px;
+            height: 6px;
+            background: #34d399;
             border-radius: 50%;
             animation: pulse 2s ease-in-out infinite;
-            box-shadow: 0 0 10px #39ff14;
+            box-shadow: 0 0 8px #34d399;
         }
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.3); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 0.8; }
         }
 
-        /* Greeting */
-        .greeting-section {
-            margin-bottom: 25px;
-        }
-
-        .greeting-text {
-            font-size: 28px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #00f5ff;
-            text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
-        }
-
-        .member-name {
-            color: #ff006e;
-            animation: glitch 3s infinite;
-        }
-
-        @keyframes glitch {
-            0%, 90%, 100% { transform: translate(0); }
-            92% { transform: translate(-2px, 2px); }
-            94% { transform: translate(2px, -2px); }
-            96% { transform: translate(-2px, -2px); }
-            98% { transform: translate(2px, 2px); }
-        }
-
-        .sub-greeting {
-            font-size: 14px;
-            color: #a0a0a0;
-            opacity: 0;
-            animation: typeWriter 2s steps(40) 1s forwards;
-        }
-
-        @keyframes typeWriter {
-            from { opacity: 0; width: 0; }
-            to { opacity: 1; width: 100%; }
-        }
-
-        /* Info grid */
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .info-card {
-            background: rgba(255, 0, 110, 0.05);
-            border: 1px solid rgba(255, 0, 110, 0.2);
-            padding: 15px;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .info-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 245, 255, 0.1), transparent);
-            animation: shimmer 3s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .info-card:hover {
-            border-color: #00f5ff;
-            box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .info-label {
-            font-size: 11px;
-            color: #a0a0a0;
+        .status-text {
+            font-size: 12px;
+            color: #34d399;
+            font-weight: 500;
             text-transform: uppercase;
-            margin-bottom: 5px;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
-        .info-value {
-            font-size: 18px;
-            color: #00f5ff;
-            font-weight: bold;
-            font-family: 'Orbitron', sans-serif;
+        /* Content area - Horizontal layout */
+        .banner-content {
+            display: flex;
+            gap: 32px;
+            align-items: start;
         }
 
-        /* Instructions */
-        .instructions-section {
-            background: rgba(0, 245, 255, 0.05);
-            border-left: 3px solid #00f5ff;
-            padding: 20px;
-            margin-bottom: 20px;
+        /* Instructions - Vertical list on the left */
+        .instructions-box {
+            flex: 1;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(52, 211, 153, 0.1);
+            border-left: 3px solid #34d399;
+            border-radius: 12px;
+            padding: 24px;
         }
 
         .instructions-title {
-            font-size: 16px;
-            color: #ff006e;
-            margin-bottom: 12px;
+            font-size: 14px;
+            color: #34d399;
+            font-weight: 600;
+            margin-bottom: 16px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .instruction-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         .instruction-item {
             display: flex;
             align-items: start;
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 12px;
             font-size: 13px;
             line-height: 1.6;
+            color: #cbd5e1;
         }
 
-        .instruction-icon {
-            color: #39ff14;
-            font-size: 16px;
+        .instruction-bullet {
+            color: #34d399;
+            font-size: 18px;
+            line-height: 1;
             margin-top: 2px;
+            flex-shrink: 0;
         }
 
-        /* Tech codes */
-        .tech-codes {
+        /* Info panel on the right */
+        .info-panel {
+            flex: 0 0 280px;
             display: flex;
-            gap: 15px;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .info-card-small {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(52, 211, 153, 0.1);
+            border-radius: 10px;
+            padding: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .info-card-small:hover {
+            border-color: rgba(52, 211, 153, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .info-label {
+            font-size: 11px;
+            color: #64748b;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-size: 16px;
+            color: #34d399;
+            font-weight: 600;
+        }
+
+        .processing-indicator {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        /* Footer tags */
+        .banner-footer {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(52, 211, 153, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tech-tags {
+            display: flex;
+            gap: 10px;
             flex-wrap: wrap;
         }
 
-        .tech-code {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 0, 110, 0.1);
-            border: 1px solid rgba(255, 0, 110, 0.3);
-            padding: 8px 12px;
+        .tech-tag {
+            background: rgba(52, 211, 153, 0.08);
+            border: 1px solid rgba(52, 211, 153, 0.15);
+            padding: 6px 12px;
+            border-radius: 6px;
             font-size: 11px;
-            font-family: 'Share Tech Mono', monospace;
-            color: #ff006e;
+            color: #34d399;
+            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.3px;
         }
 
-        .tech-code::before {
-            content: '>';
-            color: #00f5ff;
-            font-weight: bold;
-        }
-
-        /* Footer */
-        .cyber-footer {
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(255, 0, 110, 0.2);
-            text-align: center;
+        .footer-text {
             font-size: 11px;
-            color: #666;
-        }
-
-        /* Glitch effect on hover */
-        .cyber-card:hover .brand {
-            animation: textGlitch 0.3s;
-        }
-
-        @keyframes textGlitch {
-            0%, 100% { transform: translate(0); }
-            25% { transform: translate(-2px, 2px); }
-            50% { transform: translate(2px, -2px); }
-            75% { transform: translate(-2px, -2px); }
+            color: #475569;
         }
 
         /* Responsive */
+        @media (max-width: 968px) {
+            .banner-content {
+                flex-direction: column;
+            }
+
+            .info-panel {
+                flex: 1;
+                width: 100%;
+                flex-direction: row;
+            }
+
+            .info-card-small {
+                flex: 1;
+            }
+        }
+
         @media (max-width: 768px) {
-            .dashboard-container {
-                width: 95%;
-                padding: 10px;
+            .banner-card {
+                padding: 24px;
             }
 
-            .cyber-card {
-                padding: 20px;
+            .banner-header {
+                flex-direction: column;
+                align-items: start;
+                gap: 16px;
             }
 
-            .brand {
-                font-size: 20px;
+            .header-left {
+                flex-direction: column;
+                align-items: start;
+                gap: 12px;
             }
 
-            .greeting-text {
-                font-size: 22px;
+            .info-panel {
+                flex-direction: column;
             }
 
-            .info-grid {
-                grid-template-columns: 1fr;
+            .tech-tags {
+                flex-wrap: wrap;
+            }
+
+            .banner-footer {
+                flex-direction: column;
+                gap: 16px;
+                align-items: start;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Background elements -->
-    <div class="cyber-bg"></div>
-    <div class="hex-grid"></div>
-    <div class="scan-line"></div>
-
-    <!-- Main dashboard -->
-    <div class="dashboard-container">
-        <div class="cyber-card">
+    <!-- Main banner -->
+    <div class="banner-container">
+        <div class="banner-card">
             <!-- Header -->
-            <div class="cyber-header">
-                <div class="brand">DARK POST</div>
+            <div class="banner-header">
+                <div class="header-left">
+                    <div class="brand">
+                        Kenny System
+                        <span class="brand-badge">Painel</span>
+                    </div>
+                    <div class="greeting-compact">
+                        <span id="greeting">Boa noite</span>, <span class="greeting-name" id="memberName">Operador</span> 👋
+                    </div>
+                </div>
                 <div class="status-indicator">
                     <div class="status-dot"></div>
-                    <span>SISTEMA ATIVO</span>
+                    <span class="status-text">Automação ativa</span>
                 </div>
             </div>
 
-            <!-- Greeting -->
-            <div class="greeting-section">
-                <h1 class="greeting-text">
-                    <span id="greeting">Bem-vindo</span>, <span class="member-name" id="memberName">Operador</span>
-                </h1>
-                <p class="sub-greeting">Sistema de distribuição automatizada em execução...</p>
-            </div>
+            <!-- Content -->
+            <div class="banner-content">
+                <!-- Instructions -->
+                <div class="instructions-box">
+                    <div class="instructions-title">
+                        ⚡ Como funciona
+                    </div>
+                    <div class="instruction-list">
+                        <div class="instruction-item">
+                            <span class="instruction-bullet">•</span>
+                            <span>Clique em "Enviar projeto" quando o vídeo estiver pronto.</span>
+                        </div>
+                        <div class="instruction-item">
+                            <span class="instruction-bullet">•</span>
+                            <span>Confira se o link do Drive está como <strong>público</strong> antes de enviar.</span>
+                        </div>
+                        <div class="instruction-item">
+                            <span class="instruction-bullet">•</span>
+                            <span>Relaxe: a automação cuida do resto pra você 🚀</span>
+                        </div>
+                        <div class="instruction-item">
+                            <span class="instruction-bullet">•</span>
+                            <span>Não precisa enviar mais pelo Telegram, e não precisa se preocupar com as descrições e hashtags - elas são enviadas automaticamente.</span>
+                        </div>
+                    </div>
+                </div>
 
-            <!-- Info cards -->
-            <div class="info-grid">
-                <div class="info-card">
-                    <div class="info-label">Status da Automação</div>
-                    <div class="info-value">ONLINE</div>
+                <!-- Info panel -->
+                <div class="info-panel">
+                    <div class="info-card-small">
+                        <div class="info-label">Status</div>
+                        <div class="info-value">Online</div>
+                    </div>
+                    <div class="info-card-small">
+                        <div class="info-label">Modo</div>
+                        <div class="info-value">Automático</div>
+                        <div class="processing-indicator">Processando...</div>
+                    </div>
                 </div>
-                <div class="info-card">
-                    <div class="info-label">Última Sincronização</div>
-                    <div class="info-value" id="lastSync">--:--</div>
-                </div>
-                <div class="info-card">
-                    <div class="info-label">Tarefas na Fila</div>
-                    <div class="info-value" id="taskQueue">0</div>
-                </div>
-            </div>
-
-            <!-- Instructions -->
-            <div class="instructions-section">
-                <div class="instructions-title">⚡ Protocolo de Upload</div>
-                <div class="instruction-item">
-                    <span class="instruction-icon">▸</span>
-                    <span>Adicione seu projeto na página designada do Notion</span>
-                </div>
-                <div class="instruction-item">
-                    <span class="instruction-icon">▸</span>
-                    <span>A automação sincroniza a cada 5 minutos automaticamente</span>
-                </div>
-                <div class="instruction-item">
-                    <span class="instruction-icon">▸</span>
-                    <span>Arquivos serão processados e distribuídos via Dark Post API</span>
-                </div>
-                <div class="instruction-item">
-                    <span class="instruction-icon">▸</span>
-                    <span>Acompanhe o status em tempo real neste dashboard</span>
-                </div>
-            </div>
-
-            <!-- Tech codes -->
-            <div class="tech-codes">
-                <div class="tech-code">n8n-automation</div>
-                <div class="tech-code">notion-sync</div>
-                <div class="tech-code">api-v2.0</div>
-                <div class="tech-code">webhook-active</div>
             </div>
 
             <!-- Footer -->
-            <div class="cyber-footer">
-                Dark Post © 2025 | API Platform | Kennedy Bringel
+            <div class="banner-footer">
+                <div class="tech-tags">
+                    <div class="tech-tag">N8N-Automation</div>
+                    <div class="tech-tag">Notion-Database</div>
+                    <div class="tech-tag">Auto-Sync</div>
+                    <div class="tech-tag">No-Telegram</div>
+                </div>
+                <div class="footer-text">
+                    Kenny System © 2025
+                </div>
             </div>
         </div>
     </div>
@@ -483,41 +425,9 @@
             }
         }
 
-        // Update last sync time
-        function updateLastSync() {
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            document.getElementById('lastSync').textContent = `${hours}:${minutes}`;
-        }
-
-        // Random task queue number (simulated)
-        function updateTaskQueue() {
-            const randomTasks = Math.floor(Math.random() * 5);
-            document.getElementById('taskQueue').textContent = randomTasks;
-        }
-
         // Initialize
         updateGreeting();
         getMemberName();
-        updateLastSync();
-        updateTaskQueue();
-
-        // Update time every minute
-        setInterval(updateLastSync, 60000);
-        
-        // Update task queue every 30 seconds
-        setInterval(updateTaskQueue, 30000);
-
-        // Random glitch effect
-        setInterval(() => {
-            if (Math.random() > 0.95) {
-                document.querySelector('.cyber-card').style.animation = 'textGlitch 0.2s';
-                setTimeout(() => {
-                    document.querySelector('.cyber-card').style.animation = '';
-                }, 200);
-            }
-        }, 2000);
     </script>
 </body>
 </html>
