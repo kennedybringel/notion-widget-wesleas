@@ -240,6 +240,128 @@
             margin-top: 4px;
         }
 
+        /* Hack button */
+        .hack-button {
+            margin-top: 8px;
+            width: 100%;
+            padding: 8px 12px;
+            background: rgba(52, 211, 153, 0.08);
+            border: 1px solid rgba(52, 211, 153, 0.2);
+            border-radius: 6px;
+            color: #34d399;
+            font-size: 11px;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hack-button:hover {
+            background: rgba(52, 211, 153, 0.15);
+            border-color: #34d399;
+            transform: translateY(-1px);
+        }
+
+        /* Hack overlay */
+        .hack-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            animation: fadeInOverlay 0.3s ease-out;
+        }
+
+        .hack-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeInOverlay {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .hack-content {
+            font-family: 'Courier New', monospace;
+            color: #00ff00;
+            font-size: 16px;
+            text-align: left;
+            max-width: 600px;
+            padding: 20px;
+            animation: glitchText 0.1s infinite;
+        }
+
+        @keyframes glitchText {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-2px, -2px); }
+            80% { transform: translate(2px, 2px); }
+            100% { transform: translate(0); }
+        }
+
+        .hack-line {
+            margin: 4px 0;
+            opacity: 0;
+            animation: typeLine 0.05s forwards;
+        }
+
+        @keyframes typeLine {
+            to { opacity: 1; }
+        }
+
+        /* Glitch effect para o card inteiro */
+        .banner-card.hacked {
+            animation: cardGlitch 0.3s infinite;
+        }
+
+        @keyframes cardGlitch {
+            0% { 
+                transform: translate(0) skew(0deg);
+                filter: hue-rotate(0deg);
+            }
+            20% { 
+                transform: translate(-5px, 5px) skew(2deg);
+                filter: hue-rotate(90deg);
+            }
+            40% { 
+                transform: translate(5px, -5px) skew(-2deg);
+                filter: hue-rotate(180deg);
+            }
+            60% { 
+                transform: translate(-5px, -5px) skew(2deg);
+                filter: hue-rotate(270deg);
+            }
+            80% { 
+                transform: translate(5px, 5px) skew(-2deg);
+                filter: hue-rotate(360deg);
+            }
+            100% { 
+                transform: translate(0) skew(0deg);
+                filter: hue-rotate(0deg);
+            }
+        }
+
+        /* Matrix rain effect */
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9998;
+            display: none;
+        }
+
+        .matrix-rain.active {
+            display: block;
+        }
+
         /* Footer tags */
         .banner-footer {
             margin-top: 20px;
@@ -326,7 +448,7 @@
 <body>
     <!-- Main banner -->
     <div class="banner-container">
-        <div class="banner-card">
+        <div class="banner-card" id="mainCard">
             <!-- Header -->
             <div class="banner-header">
                 <div class="header-left">
@@ -335,7 +457,7 @@
                         <span class="brand-badge">Painel</span>
                     </div>
                     <div class="greeting-compact">
-                        <span id="greeting">Boa noite</span>, <span class="greeting-name" id="memberName">Operador</span> 👋
+                        <span id="greeting">Tenha uma excepcional noite</span>, <span class="greeting-name" id="memberName"></span>
                     </div>
                 </div>
                 <div class="status-indicator">
@@ -354,11 +476,15 @@
                     <div class="instruction-list">
                         <div class="instruction-item">
                             <span class="instruction-bullet">•</span>
-                            <span>Clique em "Enviar projeto" quando o vídeo estiver pronto.</span>
+                            <span>Preencha a propriedade "Link do projeto" com o link do Drive.</span>
                         </div>
                         <div class="instruction-item">
                             <span class="instruction-bullet">•</span>
-                            <span>Confira se o link do Drive está como <strong>público</strong> antes de enviar.</span>
+                            <span>Confira se o link está público (qualquer pessoa com o link → visualizar).</span>
+                        </div>
+                        <div class="instruction-item">
+                            <span class="instruction-bullet">•</span>
+                            <span>Clique em "Enviar projeto".</span>
                         </div>
                         <div class="instruction-item">
                             <span class="instruction-bullet">•</span>
@@ -380,7 +506,9 @@
                     <div class="info-card-small">
                         <div class="info-label">Modo</div>
                         <div class="info-value">Automático</div>
-                        <div class="processing-indicator">Processando...</div>
+                        <button id="hackButton" class="hack-button">
+                            Se for curioso, aperte aqui
+                        </button>
                     </div>
                 </div>
             </div>
@@ -388,7 +516,6 @@
             <!-- Footer -->
             <div class="banner-footer">
                 <div class="tech-tags">
-                    <div class="tech-tag">N8N-Automation</div>
                     <div class="tech-tag">Notion-Database</div>
                     <div class="tech-tag">Auto-Sync</div>
                     <div class="tech-tag">No-Telegram</div>
@@ -400,6 +527,14 @@
         </div>
     </div>
 
+    <!-- Hack overlay -->
+    <div class="hack-overlay" id="hackOverlay">
+        <div class="hack-content" id="hackContent"></div>
+    </div>
+
+    <!-- Matrix rain canvas -->
+    <canvas class="matrix-rain" id="matrixCanvas"></canvas>
+
     <script>
         // Dynamic greeting based on time
         function updateGreeting() {
@@ -407,11 +542,11 @@
             const greetingEl = document.getElementById('greeting');
             
             if (hour >= 5 && hour < 12) {
-                greetingEl.textContent = 'Bom dia';
+                greetingEl.textContent = 'Tenha uma excepcional manhã';
             } else if (hour >= 12 && hour < 18) {
-                greetingEl.textContent = 'Boa tarde';
+                greetingEl.textContent = 'Tenha uma excepcional tarde';
             } else {
-                greetingEl.textContent = 'Boa noite';
+                greetingEl.textContent = 'Tenha uma excepcional noite';
             }
         }
 
@@ -428,6 +563,120 @@
         // Initialize
         updateGreeting();
         getMemberName();
+
+        // Hack easter egg
+        const hackButton = document.getElementById('hackButton');
+        const hackOverlay = document.getElementById('hackOverlay');
+        const hackContent = document.getElementById('hackContent');
+        const mainCard = document.getElementById('mainCard');
+        const matrixCanvas = document.getElementById('matrixCanvas');
+
+        const hackMessages = [
+            '> Iniciando sequência de invasão...',
+            '> Conectando ao servidor Kenny System...',
+            '> [OK] Conexão estabelecida',
+            '> Bypassando firewall...',
+            '> [OK] Firewall contornado',
+            '> Acessando banco de dados...',
+            '> [OK] Acesso garantido',
+            '> Coletando dados do usuário...',
+            '> Nome: ' + (document.getElementById('memberName').textContent || 'Operador'),
+            '> Status: Curioso demais',
+            '> Nível de hacking: Iniciante',
+            '> ',
+            '> ALERTA: Intrusão detectada!',
+            '> Sistema de segurança ativado!',
+            '> Rastreando localização...',
+            '> [ERRO] Rastreamento falhou',
+            '> ',
+            '> Brincadeira! 😂',
+            '> Você caiu direitinho hein?',
+            '> Voltando ao normal em 3...',
+            '> 2...',
+            '> 1...',
+            '> Sistema restaurado ✓'
+        ];
+
+        function startMatrixRain() {
+            const canvas = matrixCanvas;
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            const fontSize = 14;
+            const columns = canvas.width / fontSize;
+            const drops = Array(Math.floor(columns)).fill(1);
+            
+            let animationId;
+            
+            function draw() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#0f0';
+                ctx.font = fontSize + 'px monospace';
+                
+                for (let i = 0; i < drops.length; i++) {
+                    const text = chars[Math.floor(Math.random() * chars.length)];
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+                
+                animationId = requestAnimationFrame(draw);
+            }
+            
+            draw();
+            
+            return () => {
+                cancelAnimationFrame(animationId);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            };
+        }
+
+        hackButton.addEventListener('click', function() {
+            // Ativar overlay
+            hackOverlay.classList.add('active');
+            matrixCanvas.classList.add('active');
+            
+            // Iniciar matrix rain
+            const stopMatrix = startMatrixRain();
+            
+            // Adicionar classe de glitch no card
+            mainCard.classList.add('hacked');
+            
+            // Limpar conteúdo anterior
+            hackContent.innerHTML = '';
+            
+            // Digitar mensagens
+            let messageIndex = 0;
+            const typeInterval = setInterval(() => {
+                if (messageIndex < hackMessages.length) {
+                    const line = document.createElement('div');
+                    line.className = 'hack-line';
+                    line.textContent = hackMessages[messageIndex];
+                    line.style.animationDelay = '0s';
+                    hackContent.appendChild(line);
+                    hackContent.scrollTop = hackContent.scrollHeight;
+                    messageIndex++;
+                } else {
+                    clearInterval(typeInterval);
+                    
+                    // Restaurar tudo após 2 segundos
+                    setTimeout(() => {
+                        hackOverlay.classList.remove('active');
+                        matrixCanvas.classList.remove('active');
+                        mainCard.classList.remove('hacked');
+                        stopMatrix();
+                    }, 2000);
+                }
+            }, 150);
+        });
     </script>
 </body>
 </html>
