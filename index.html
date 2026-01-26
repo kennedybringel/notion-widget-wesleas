@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kenny System - Dashboard</title>
+    <title>Skills Radar Chart</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
@@ -14,802 +14,239 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #0a1628 0%, #0d1b2a 50%, #1b263b 100%);
-            color: #e0e6ed;
-            overflow: hidden;
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Background subtle pattern */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(52, 211, 153, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, rgba(59, 130, 246, 0.03) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        /* Container principal - Banner largo */
-        .banner-container {
-            position: relative;
-            z-index: 10;
-            width: 95%;
-            max-width: 1200px;
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Card principal - Banner horizontal */
-        .banner-card {
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
-            border: 1px solid rgba(52, 211, 153, 0.15);
-            border-radius: 16px;
-            padding: 32px 40px;
-            position: relative;
-            backdrop-filter: blur(10px);
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.05);
-        }
-
-        /* Header horizontal */
-        .banner-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 24px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(52, 211, 153, 0.1);
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .brand {
-            font-size: 20px;
-            font-weight: 700;
-            color: #34d399;
-            letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .brand-badge {
-            background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
-            color: #0a1628;
-            font-size: 10px;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .greeting-compact {
-            font-size: 15px;
-            color: #94a3b8;
-            font-weight: 400;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .greeting-emoji {
-            font-size: 24px;
-            display: inline-block;
-            animation: floatEmoji 3s ease-in-out infinite;
-        }
-
-        @keyframes floatEmoji {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(5deg); }
-        }
-
-        .greeting-name {
-            color: #e0e6ed;
-            font-weight: 600;
-        }
-
-        /* Elementos decorativos */
-        .decorative-elements {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 5;
-        }
-
-        /* Estrelas cadentes / Cometas */
-        .shooting-star {
-            position: absolute;
-            top: 10%;
-            right: -100px;
-            width: 2px;
-            height: 2px;
-            background: #34d399;
-            border-radius: 50%;
-            box-shadow: 
-                0 0 10px #34d399,
-                0 0 20px #34d399,
-                0 0 30px #34d399;
-            animation: shootingStar 8s linear infinite;
-        }
-
-        .shooting-star::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 80px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #34d399);
-            transform-origin: right;
-        }
-
-        @keyframes shootingStar {
-            0% {
-                transform: translateX(0) translateY(0);
-                opacity: 1;
-            }
-            70% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateX(-1500px) translateY(600px);
-                opacity: 0;
-            }
-        }
-
-        /* Gatinho de cadeira de rodas */
-        .wheelchair-cat {
-            position: absolute;
-            bottom: 20px;
-            left: -80px;
-            font-size: 48px;
-            filter: grayscale(0.3) brightness(1.2);
-            animation: catWalk 25s linear infinite;
-            z-index: 1;
-        }
-
-        @keyframes catWalk {
-            0% {
-                left: -80px;
-                transform: scaleX(1) rotate(0deg);
-            }
-            48% {
-                left: calc(100% + 80px);
-                transform: scaleX(1) rotate(0deg);
-            }
-            50% {
-                left: calc(100% + 80px);
-                transform: scaleX(-1) rotate(0deg);
-            }
-            98% {
-                left: -80px;
-                transform: scaleX(-1) rotate(0deg);
-            }
-            100% {
-                left: -80px;
-                transform: scaleX(1) rotate(0deg);
-            }
-        }
-
-        /* Animação de balanço pra dar efeito de movimento */
-        .wheelchair-cat::before {
-            content: '♿';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 24px;
-            animation: wheelchairBounce 0.5s ease-in-out infinite;
-        }
-
-        @keyframes wheelchairBounce {
-            0%, 100% { transform: translateX(-50%) translateY(0px); }
-            50% { transform: translateX(-50%) translateY(-3px); }
-        }
-
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(52, 211, 153, 0.1);
-            padding: 8px 16px;
-            border-radius: 8px;
-            border: 1px solid rgba(52, 211, 153, 0.2);
-        }
-
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            background: #34d399;
-            border-radius: 50%;
-            animation: pulse 2s ease-in-out infinite;
-            box-shadow: 0 0 8px #34d399;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.2); opacity: 0.8; }
-        }
-
-        .status-text {
-            font-size: 12px;
-            color: #34d399;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Content area - Horizontal layout */
-        .banner-content {
-            display: flex;
-            gap: 32px;
-            align-items: start;
-        }
-
-        /* Instructions - Vertical list on the left */
-        .instructions-box {
-            flex: 1;
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(52, 211, 153, 0.1);
-            border-left: 3px solid #34d399;
-            border-radius: 12px;
-            padding: 24px;
-        }
-
-        .instructions-title {
-            font-size: 14px;
-            color: #34d399;
-            font-weight: 600;
-            margin-bottom: 16px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .instruction-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .instruction-item {
-            display: flex;
-            align-items: start;
-            gap: 12px;
-            font-size: 13px;
-            line-height: 1.6;
-            color: #cbd5e1;
-        }
-
-        .instruction-bullet {
-            color: #34d399;
-            font-size: 18px;
-            line-height: 1;
-            margin-top: 2px;
-            flex-shrink: 0;
-        }
-
-        /* Info panel on the right */
-        .info-panel {
-            flex: 0 0 280px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .info-card-small {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(52, 211, 153, 0.1);
-            border-radius: 10px;
-            padding: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .info-card-small:hover {
-            border-color: rgba(52, 211, 153, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .info-label {
-            font-size: 11px;
-            color: #64748b;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-            letter-spacing: 0.5px;
-            font-weight: 500;
-        }
-
-        .info-value {
-            font-size: 16px;
-            color: #34d399;
-            font-weight: 600;
-        }
-
-        .processing-indicator {
-            font-size: 12px;
-            color: #94a3b8;
-            margin-top: 4px;
-        }
-
-        /* Hack button */
-        .hack-button {
-            margin-top: 8px;
-            width: 100%;
-            padding: 8px 12px;
-            background: rgba(52, 211, 153, 0.08);
-            border: 1px solid rgba(52, 211, 153, 0.2);
-            border-radius: 6px;
-            color: #34d399;
-            font-size: 11px;
             font-family: 'Inter', sans-serif;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .hack-button:hover {
-            background: rgba(52, 211, 153, 0.15);
-            border-color: #34d399;
-            transform: translateY(-1px);
-        }
-
-        /* Hack overlay */
-        .hack-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 9999;
-            display: none;
+            background: #191919;
+            color: #ffffff;
+            display: flex;
             justify-content: center;
             align-items: center;
-            animation: fadeInOverlay 0.3s ease-out;
-        }
-
-        .hack-overlay.active {
-            display: flex;
-        }
-
-        @keyframes fadeInOverlay {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .hack-content {
-            font-family: 'Courier New', monospace;
-            color: #00ff00;
-            font-size: 16px;
-            text-align: left;
-            max-width: 600px;
+            min-height: 100vh;
             padding: 20px;
-            animation: glitchText 0.1s infinite;
         }
 
-        @keyframes glitchText {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(2px, -2px); }
-            60% { transform: translate(-2px, -2px); }
-            80% { transform: translate(2px, 2px); }
-            100% { transform: translate(0); }
+        .container {
+            max-width: 600px;
+            width: 100%;
         }
 
-        .hack-line {
-            margin: 4px 0;
-            opacity: 0;
-            animation: typeLine 0.05s forwards;
+        .title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: #ffffff;
         }
 
-        @keyframes typeLine {
-            to { opacity: 1; }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            aspect-ratio: 1;
         }
 
-        /* Glitch effect para o card inteiro */
-        .banner-card.hacked {
-            animation: cardGlitch 0.3s infinite;
-        }
-
-        @keyframes cardGlitch {
-            0% { 
-                transform: translate(0) skew(0deg);
-                filter: hue-rotate(0deg);
-            }
-            20% { 
-                transform: translate(-5px, 5px) skew(2deg);
-                filter: hue-rotate(90deg);
-            }
-            40% { 
-                transform: translate(5px, -5px) skew(-2deg);
-                filter: hue-rotate(180deg);
-            }
-            60% { 
-                transform: translate(-5px, -5px) skew(2deg);
-                filter: hue-rotate(270deg);
-            }
-            80% { 
-                transform: translate(5px, 5px) skew(-2deg);
-                filter: hue-rotate(360deg);
-            }
-            100% { 
-                transform: translate(0) skew(0deg);
-                filter: hue-rotate(0deg);
-            }
-        }
-
-        /* Matrix rain effect */
-        .matrix-rain {
-            position: fixed;
-            top: 0;
-            left: 0;
+        canvas {
+            display: block;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            z-index: 9998;
-            display: none;
         }
 
-        .matrix-rain.active {
-            display: block;
-        }
-
-        /* Footer tags */
-        .banner-footer {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(52, 211, 153, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .tech-tags {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .tech-tag {
-            background: rgba(52, 211, 153, 0.08);
-            border: 1px solid rgba(52, 211, 153, 0.15);
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 11px;
-            color: #34d399;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-
-        .footer-text {
-            font-size: 11px;
-            color: #475569;
-        }
-
-        /* Responsive */
-        @media (max-width: 968px) {
-            .banner-content {
-                flex-direction: column;
+        /* Animação de entrada */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
             }
-
-            .info-panel {
-                flex: 1;
-                width: 100%;
-                flex-direction: row;
-            }
-
-            .info-card-small {
-                flex: 1;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        @media (max-width: 768px) {
-            .banner-card {
-                padding: 24px;
-            }
-
-            .banner-header {
-                flex-direction: column;
-                align-items: start;
-                gap: 16px;
-            }
-
-            .header-left {
-                flex-direction: column;
-                align-items: start;
-                gap: 12px;
-            }
-
-            .info-panel {
-                flex-direction: column;
-            }
-
-            .tech-tags {
-                flex-wrap: wrap;
-            }
-
-            .banner-footer {
-                flex-direction: column;
-                gap: 16px;
-                align-items: start;
-            }
+        .container {
+            animation: fadeIn 0.6s ease-out;
         }
     </style>
 </head>
 <body>
-    <!-- Main banner -->
-    <div class="banner-container">
-        <div class="banner-card" id="mainCard">
-            <!-- Header -->
-            <div class="banner-header">
-                <div class="header-left">
-                    <div class="brand">
-                        Kenny System
-                        <span class="brand-badge">Painel</span>
-                    </div>
-                    <div class="greeting-compact">
-                        <span id="greetingEmoji" class="greeting-emoji">🌙</span>
-                        <span id="greeting">Tenha uma excepcional noite</span>, <span class="greeting-name" id="memberName"></span>
-                    </div>
-                </div>
-                <div class="status-indicator">
-                    <div class="status-dot"></div>
-                    <span class="status-text">Automação ativa</span>
-                </div>
-            </div>
-
-            <!-- Content -->
-            <div class="banner-content">
-                <!-- Instructions -->
-                <div class="instructions-box">
-                    <div class="instructions-title">
-                        ⚡ Como funciona
-                    </div>
-                    <div class="instruction-list">
-                        <div class="instruction-item">
-                            <span class="instruction-bullet">•</span>
-                            <span>Preencha a propriedade "Link do projeto" com o link do Drive.</span>
-                        </div>
-                        <div class="instruction-item">
-                            <span class="instruction-bullet">•</span>
-                            <span>Confira se o link está público (qualquer pessoa com o link → visualizar).</span>
-                        </div>
-                        <div class="instruction-item">
-                            <span class="instruction-bullet">•</span>
-                            <span>Clique em "Enviar projeto".</span>
-                        </div>
-                        <div class="instruction-item">
-                            <span class="instruction-bullet">•</span>
-                            <span>Relaxe: a automação cuida do resto pra você 🚀</span>
-                        </div>
-                        <div class="instruction-item">
-                            <span class="instruction-bullet">•</span>
-                            <span>Não precisa enviar mais pelo Telegram, e não precisa se preocupar com as descrições e hashtags - elas são enviadas automaticamente.</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Info panel -->
-                <div class="info-panel">
-                    <div class="info-card-small">
-                        <div class="info-label">Status</div>
-                        <div class="info-value">Online</div>
-                    </div>
-                    <div class="info-card-small">
-                        <div class="info-label">Modo</div>
-                        <div class="info-value">Automático</div>
-                        <button id="hackButton" class="hack-button">
-                            Se for curioso, aperte aqui
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Footer -->
-            <div class="banner-footer">
-                <div class="tech-tags">
-                    <div class="tech-tag">Notion-Database</div>
-                    <div class="tech-tag">Auto-Sync</div>
-                    <div class="tech-tag">No-Telegram</div>
-                </div>
-                <div class="footer-text">
-                    Kenny System © 2025
-                </div>
-            </div>
-        </div>
-
-        <!-- Elementos decorativos animados -->
-        <div class="decorative-elements">
-            <!-- Estrelas/Cometas -->
-            <div class="shooting-star"></div>
-            <div class="shooting-star" style="animation-delay: 3s; top: 20%;"></div>
-            <div class="shooting-star" style="animation-delay: 6s; top: 60%;"></div>
-            
-            <!-- Gatinho de cadeira de rodas -->
-            <div class="wheelchair-cat">🐱</div>
+    <div class="container">
+        <h1 class="title">My Skills</h1>
+        
+        <div class="chart-container">
+            <canvas id="radarChart"></canvas>
         </div>
     </div>
-
-    <!-- Hack overlay -->
-    <div class="hack-overlay" id="hackOverlay">
-        <div class="hack-content" id="hackContent"></div>
-    </div>
-
-    <!-- Matrix rain canvas -->
-    <canvas class="matrix-rain" id="matrixCanvas"></canvas>
 
     <script>
-        // Dynamic greeting based on time
-        function updateGreeting() {
-            const hour = new Date().getHours();
-            const greetingEl = document.getElementById('greeting');
-            const emojiEl = document.getElementById('greetingEmoji');
-            
-            if (hour >= 5 && hour < 12) {
-                greetingEl.textContent = 'Tenha uma excepcional manhã';
-                emojiEl.textContent = '☀️'; // Sol da manhã
-            } else if (hour >= 12 && hour < 18) {
-                greetingEl.textContent = 'Tenha uma excepcional tarde';
-                emojiEl.textContent = '🌤️'; // Sol da tarde
-            } else {
-                greetingEl.textContent = 'Tenha uma excepcional noite';
-                emojiEl.textContent = '🌙'; // Lua
-            }
-        }
-
-        // Get member name from URL parameter
-        function getMemberName() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const name = urlParams.get('nome') || urlParams.get('name');
-            
-            if (name) {
-                document.getElementById('memberName').textContent = name;
-            }
-        }
-
-        // Initialize
-        updateGreeting();
-        getMemberName();
-
-        // Hack easter egg
-        const hackButton = document.getElementById('hackButton');
-        const hackOverlay = document.getElementById('hackOverlay');
-        const hackContent = document.getElementById('hackContent');
-        const mainCard = document.getElementById('mainCard');
-        const matrixCanvas = document.getElementById('matrixCanvas');
-
-        const hackMessages = [
-            '> Iniciando sequência de invasão...',
-            '> Conectando ao servidor Kenny System...',
-            '> [OK] Conexão estabelecida',
-            '> Bypassando firewall...',
-            '> [OK] Firewall contornado',
-            '> Acessando banco de dados...',
-            '> [OK] Acesso garantido',
-            '> Coletando dados do usuário...',
-            '> Nome: ' + (document.getElementById('memberName').textContent || 'Operador'),
-            '> Status: Curioso demais',
-            '> Nível de hacking: Iniciante',
-            '> ',
-            '> ALERTA: Intrusão detectada!',
-            '> Sistema de segurança ativado!',
-            '> Rastreando localização...',
-            '> [ERRO] Rastreamento falhou',
-            '> ',
-            '> Brincadeira! 😂',
-            '> Você caiu direitinho hein?',
-            '> Voltando ao normal em 3...',
-            '> 2...',
-            '> 1...',
-            '> Sistema restaurado ✓'
+        // Dados das skills
+        const skills = [
+            { name: 'Skill 1', icon: '💡', value: 0, max: 10 },
+            { name: 'Skill 2 (Copywriting)', icon: '✏️', value: 8, max: 10 },
+            { name: 'Skill 3 (Health)', icon: '🍎', value: 7, max: 10 },
+            { name: 'Skill 4 (Video Editing)', icon: '🎥', value: 9, max: 10 },
+            { name: 'Skill 5 (Bodybuilding)', icon: '🏋️', value: 6, max: 10 },
+            { name: 'Skill 6 (Finance)', icon: '💰', value: 8, max: 10 }
         ];
 
-        function startMatrixRain() {
-            const canvas = matrixCanvas;
-            const ctx = canvas.getContext('2d');
-            
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            
-            const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
-            const fontSize = 14;
-            const columns = canvas.width / fontSize;
-            const drops = Array(Math.floor(columns)).fill(1);
-            
-            let animationId;
-            
-            function draw() {
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                
-                ctx.fillStyle = '#0f0';
-                ctx.font = fontSize + 'px monospace';
-                
-                for (let i = 0; i < drops.length; i++) {
-                    const text = chars[Math.floor(Math.random() * chars.length)];
-                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                    
-                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                        drops[i] = 0;
-                    }
-                    drops[i]++;
-                }
-                
-                animationId = requestAnimationFrame(draw);
-            }
-            
-            draw();
-            
-            return () => {
-                cancelAnimationFrame(animationId);
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-            };
+        // Configurações
+        const canvas = document.getElementById('radarChart');
+        const ctx = canvas.getContext('2d');
+        const dpr = window.devicePixelRatio || 1;
+
+        // Ajustar canvas para alta resolução
+        function resizeCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            ctx.scale(dpr, dpr);
+            drawRadarChart();
         }
 
-        hackButton.addEventListener('click', function() {
-            // Ativar overlay
-            hackOverlay.classList.add('active');
-            matrixCanvas.classList.add('active');
-            
-            // Iniciar matrix rain
-            const stopMatrix = startMatrixRain();
-            
-            // Adicionar classe de glitch no card
-            mainCard.classList.add('hacked');
-            
-            // Limpar conteúdo anterior
-            hackContent.innerHTML = '';
-            
-            // Digitar mensagens
-            let messageIndex = 0;
-            const typeInterval = setInterval(() => {
-                if (messageIndex < hackMessages.length) {
-                    const line = document.createElement('div');
-                    line.className = 'hack-line';
-                    line.textContent = hackMessages[messageIndex];
-                    line.style.animationDelay = '0s';
-                    hackContent.appendChild(line);
-                    hackContent.scrollTop = hackContent.scrollHeight;
-                    messageIndex++;
-                } else {
-                    clearInterval(typeInterval);
-                    
-                    // Restaurar tudo após 2 segundos
-                    setTimeout(() => {
-                        hackOverlay.classList.remove('active');
-                        matrixCanvas.classList.remove('active');
-                        mainCard.classList.remove('hacked');
-                        stopMatrix();
-                    }, 2000);
+        // Cores
+        const colors = {
+            background: '#191919',
+            grid: 'rgba(255, 255, 255, 0.1)',
+            gridText: '#666666',
+            dataFill: 'rgba(100, 200, 255, 0.2)',
+            dataStroke: '#64c8ff',
+            dataPoint: '#3b82f6'
+        };
+
+        // Desenhar gráfico de radar
+        function drawRadarChart() {
+            const rect = canvas.getBoundingClientRect();
+            const size = Math.min(rect.width, rect.height);
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const radius = size * 0.35;
+            const levels = 5;
+            const angleStep = (Math.PI * 2) / skills.length;
+
+            ctx.clearRect(0, 0, rect.width, rect.height);
+
+            // Desenhar níveis (círculos concêntricos)
+            for (let i = levels; i > 0; i--) {
+                const levelRadius = (radius / levels) * i;
+                
+                ctx.beginPath();
+                ctx.strokeStyle = colors.grid;
+                ctx.lineWidth = 1;
+
+                for (let j = 0; j <= skills.length; j++) {
+                    const angle = angleStep * j - Math.PI / 2;
+                    const x = centerX + Math.cos(angle) * levelRadius;
+                    const y = centerY + Math.sin(angle) * levelRadius;
+
+                    if (j === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
                 }
-            }, 150);
-        });
+                ctx.closePath();
+                ctx.stroke();
+
+                // Números dos níveis
+                if (i < levels) {
+                    ctx.fillStyle = colors.gridText;
+                    ctx.font = '11px Inter';
+                    ctx.textAlign = 'center';
+                    ctx.fillText((i * 2).toString(), centerX + 5, centerY - levelRadius + 5);
+                }
+            }
+
+            // Desenhar linhas radiais
+            ctx.strokeStyle = colors.grid;
+            ctx.lineWidth = 1;
+            for (let i = 0; i < skills.length; i++) {
+                const angle = angleStep * i - Math.PI / 2;
+                const x = centerX + Math.cos(angle) * radius;
+                const y = centerY + Math.sin(angle) * radius;
+
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+            }
+
+            // Desenhar área de dados
+            ctx.beginPath();
+            ctx.fillStyle = colors.dataFill;
+            ctx.strokeStyle = colors.dataStroke;
+            ctx.lineWidth = 2;
+
+            for (let i = 0; i < skills.length; i++) {
+                const angle = angleStep * i - Math.PI / 2;
+                const value = skills[i].value;
+                const percentage = value / skills[i].max;
+                const distance = radius * percentage;
+                const x = centerX + Math.cos(angle) * distance;
+                const y = centerY + Math.sin(angle) * distance;
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            // Desenhar pontos
+            for (let i = 0; i < skills.length; i++) {
+                const angle = angleStep * i - Math.PI / 2;
+                const value = skills[i].value;
+                const percentage = value / skills[i].max;
+                const distance = radius * percentage;
+                const x = centerX + Math.cos(angle) * distance;
+                const y = centerY + Math.sin(angle) * distance;
+
+                ctx.beginPath();
+                ctx.arc(x, y, 5, 0, Math.PI * 2);
+                ctx.fillStyle = colors.dataPoint;
+                ctx.fill();
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+
+            // Desenhar labels
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '13px Inter';
+            ctx.textAlign = 'center';
+
+            for (let i = 0; i < skills.length; i++) {
+                const angle = angleStep * i - Math.PI / 2;
+                const labelDistance = radius + 30;
+                const x = centerX + Math.cos(angle) * labelDistance;
+                const y = centerY + Math.sin(angle) * labelDistance;
+
+                // Ajustar alinhamento baseado na posição
+                if (Math.abs(angle) < 0.1) {
+                    ctx.textAlign = 'center';
+                } else if (angle > 0) {
+                    ctx.textAlign = angle > Math.PI / 2 ? 'right' : 'left';
+                } else {
+                    ctx.textAlign = angle < -Math.PI / 2 ? 'right' : 'left';
+                }
+
+                // Quebrar texto longo
+                const words = skills[i].name.split(' ');
+                if (words.length > 2) {
+                    ctx.fillText(words.slice(0, 2).join(' '), x, y - 6);
+                    ctx.fillText(words.slice(2).join(' '), x, y + 8);
+                } else {
+                    ctx.fillText(skills[i].name, x, y);
+                }
+            }
+        }
+
+        // Inicializar
+        resizeCanvas();
+
+        // Redimensionar ao mudar tamanho da janela
+        window.addEventListener('resize', resizeCanvas);
     </script>
 </body>
 </html>
